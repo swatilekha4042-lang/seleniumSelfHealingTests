@@ -1,0 +1,6 @@
+com/eaapp/tests/core/BasePage.class
+com/eaapp/tests/config/TestConfiguration.class
+com/eaapp/tests/pages/LoginPage.class
+com/eaapp/tests/utilities/ScreenshotHelper.class
+com/eaapp/tests/core/WebDriverFactory.class
+com/eaapp/tests/core/TestBase.class
