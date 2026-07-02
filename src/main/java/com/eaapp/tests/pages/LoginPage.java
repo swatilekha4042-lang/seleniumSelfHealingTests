@@ -1,20 +1,26 @@
 package com.eaapp.tests.pages;
 
 import com.eaapp.tests.core.BasePage;
+import com.eaapp.tests.utilities.SelfHealingLocators;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 public class LoginPage extends BasePage {
     // Locators for Rahul Shetty Academy Practice login page
-    private final By usernameInput = By.id("username");
-    private final By passwordInput = By.id("password");
-    private final By loginButton = By.id("signInBtn");
-    private final By errorMessage = By.cssSelector("div.alert-danger");
-    private final By usernameValidation = By.xpath("//input[@id='username']/following-sibling::*[contains(@class, 'error')]");
-    private final By passwordValidation = By.xpath("//input[@id='password']/following-sibling::*[contains(@class, 'error')]");
+
+    private final SelfHealingLocators usernameInput;
+    private final SelfHealingLocators passwordInput;
+    private final SelfHealingLocators loginButton;
+    private final SelfHealingLocators homePageElement;
 
     public LoginPage(WebDriver driver) {
         super(driver);
+        this.usernameInput = new SelfHealingLocators(driver, By.id("userEmailss"));
+        this.passwordInput = new SelfHealingLocators(driver, By.id("userPassword"));
+        this.loginButton = new SelfHealingLocators(driver, By.id("login"));
+        this.homePageElement = new SelfHealingLocators(driver, By.xpath("(//*[contains(@class, 'card-body')])[1]"));
     }
 
     // Navigation
@@ -23,18 +29,22 @@ public class LoginPage extends BasePage {
     }
 
     // Actions
-    public void enterUsername(String username) {
-        sendKeys(usernameInput, username);
+    public WebElement enterUsername(String username) {
+        WebElement usernameEle = usernameInput.findElementCustom();
+        sendKeys(usernameEle, username);
+        return usernameEle;
     }
 
     public void enterPassword(String password) {
-        sendKeys(passwordInput, password);
+        WebElement passEle = passwordInput.findElementCustom();
+        sendKeys(passEle, password);
     }
 
     public void clickLoginButton() {
-        click(loginButton);
+        WebElement loginBtnEle = loginButton.findElementCustom();
+        waitForElementToBeClickable(loginBtnEle);
+        click(loginBtnEle);
     }
-
 
     public void login(String username, String password) {
         enterUsername(username);
@@ -42,65 +52,13 @@ public class LoginPage extends BasePage {
         clickLoginButton();
     }
 
-    // Verifications
-    public boolean isLoginPageDisplayed() {
-        return isElementDisplayed(usernameInput) &&
-               isElementDisplayed(passwordInput) &&
-               isElementDisplayed(loginButton);
-    }
-
-    public boolean isUsernameFieldDisplayed() {
-        return isElementDisplayed(usernameInput);
-    }
-
-    public boolean isPasswordFieldDisplayed() {
-        return isElementDisplayed(passwordInput);
-    }
-
-    public boolean isLoginButtonDisplayed() {
-        return isElementDisplayed(loginButton);
-    }
-
-
-    public boolean isErrorMessageDisplayed() {
-        return isElementDisplayed(errorMessage);
-    }
-
-    public String getErrorMessage() {
-        try {
-            return getText(errorMessage);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    public boolean isUsernameValidationDisplayed() {
-        return isElementDisplayed(usernameValidation);
-    }
-
-    public boolean isPasswordValidationDisplayed() {
-        return isElementDisplayed(passwordValidation);
-    }
-
-    public String getUsernameValidationMessage() {
-        try {
-            return getText(usernameValidation);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
-    public String getPasswordValidationMessage() {
-        try {
-            return getText(passwordValidation);
-        } catch (Exception e) {
-            return "";
-        }
-    }
-
     public String getPageSource() {
         return driver.getPageSource();
     }
 
+    public boolean validateLogin() {
+        WebElement homepageEle = homePageElement.findElementCustom();
+        return isElementDisplayed(homepageEle);
+    }
 
 }

@@ -10,9 +10,8 @@ import org.testng.annotations.*;
  * Test class demonstrating LLMClient usage
  * 
  * Prerequisites:
- * - Ollama running locally: ollama serve
- * - Model pulled: ollama pull qwen3-code:30b
- * - Service available at: http://localhost:11434/api/generate
+ * - Service available at: https://ollama.com/api/chat
+ * - Model: gpt-oss:120b
  */
 public class LLMIntegrationTest {
     private static final Logger logger = Logger.getLogger(LLMIntegrationTest.class);

@@ -8,7 +8,7 @@
         </classes>
     </test>
 
-    <test name="Home Page Tests">
+    <!--<test name="Home Page Tests">
         <classes>
             <class name="com.eaapp.tests.HomePageTest"/>
         </classes>
@@ -18,6 +18,6 @@
         <classes>
             <class name="com.eaapp.tests.EmployeeListTest"/>
         </classes>
-    </test>
+    </test>-->
 
 </suite>

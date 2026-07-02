@@ -23,7 +23,7 @@ public class TestConfiguration {
         }
         return instance;
     }
-
+    //This is loading application.json file
     private void loadConfiguration() {
         try {
             String configPath = System.getProperty("user.dir") + "/src/test/resources/application.json";

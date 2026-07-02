@@ -1,6 +1,6 @@
 {
   "testSettings": {
-    "baseUrl": "https://rahulshettyacademy.com/loginpagePractise/",
+    "baseUrl": "https://rahulshettyacademy.com/client/#/auth/login",
     "browser": "Chrome",
     "implicitWaitSeconds": 10,
     "explicitWaitSeconds": 30,

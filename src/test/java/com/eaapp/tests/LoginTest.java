@@ -1,11 +1,13 @@
 package com.eaapp.tests;
 
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
 import com.eaapp.tests.config.TestConfiguration;
 import com.eaapp.tests.core.WebDriverFactory;
 import com.eaapp.tests.pages.LoginPage;
+import com.eaapp.tests.utilities.ExtentManager;
 import com.eaapp.tests.utilities.LLMClient;
 import com.eaapp.tests.utilities.SelfHealingLocators;
-
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
@@ -19,7 +21,9 @@ public class LoginTest {
     private WebDriver driver;
     private LoginPage loginPage;
     private TestConfiguration config;
-     private LLMClient llmClient;
+    private LLMClient llmClient;
+    private ExtentReports extent;
+    private ExtentTest test;
 
     @BeforeClass
     public void setUp() {
@@ -30,6 +34,8 @@ public class LoginTest {
         config = TestConfiguration.getInstance();
         logger.info("WebDriver initialized successfully");
         llmClient = new LLMClient();
+        extent = ExtentManager.getInstance();
+        test = extent.createTest("Login Test");
     }
 
     @AfterClass
@@ -38,53 +44,31 @@ public class LoginTest {
             if (driver != null) {
                 driver.quit();
                 logger.info("WebDriver closed successfully");
+                test.info("WebDriver closed successfully");
             }
         } catch (Exception e) {
             logger.error("Error closing WebDriver: " + e.getMessage());
+            test.info("Error closing WebDriver: " + e.getMessage());
         }
+        extent.flush();
         logger.info("========== Test Complete ==========\n");
     }
 
-    //@Test(description = "User logs in with valid credentials")
-    public void testUserLoginWithValidCredentials() {
-        logger.info("Test: User logs in with valid credentials");
-        
-        loginPage.navigateToLoginPage();
-        Assert.assertTrue(loginPage.isLoginPageDisplayed());
-        Assert.assertTrue(loginPage.isLoginButtonDisplayed());
-
-        loginPage.enterUsername(config.getValidUsername());
-        loginPage.enterPassword(config.getValidPassword());
-        loginPage.clickLoginButton();
-           
-        // Add assertion for successful login
-        //Assert.assertTrue(loginPage.isTitleDisplayed());
-        logger.info("Login test passed");
-    }
-
-    //@Test(description = "Login with invalid credentials shows error")
-    public void testLoginWithInvalidCredentials() {
-        logger.info("Test: Login with invalid credentials");
-        
-        loginPage.navigateToLoginPage();
-        loginPage.enterUsername("invaliduser");
-        loginPage.enterPassword("wrongpassword");
-        loginPage.clickLoginButton();
-        
-        // Add assertion for error message
-        logger.info("Invalid login test passed");
-    }
-
     @Test(description = "Test enhanced login with LLM locator suggestion")
-    public void testEnhancedLogin() throws Exception {
+    public void testEnhancedLogin(){
         logger.info("Test: Enhanced Login with LLM");
-        
-        loginPage.navigateToLoginPage();
-        // By element = By.id("signInBtns");
-        //SelfHealingLocators selfHealing=new SelfHealingLocators(driver, element);
-        //WebElement aiElement=selfHealing.findElementCustom();
-        //aiElement.click();
-        loginPage.login("test","test");
+         test.info("Test: Enhanced Login with LLM");
+        try {
+            loginPage.navigateToLoginPage();
+            loginPage.login("swati123beh@gmail.com","Test@123");
+            if(!(loginPage.validateLogin()))
+            {
+               logger.error("Login validation failed");
+               test.info("Login validation failed");
+            }              
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }

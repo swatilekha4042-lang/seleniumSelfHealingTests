@@ -1,6 +1,6 @@
 {
-  "endpoint": "http://localhost:11434/api/generate",
-  "model": "qwen3-vl:235b-instruct-cloud",
+  "endpoint": "https://ollama.com/api/chat",
+  "model": "gpt-oss:120b",
   "stream": false,
   "defaultPrompt": "You are a helpful assistant.",
   "temperature": 0.1,
