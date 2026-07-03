@@ -12,6 +12,25 @@ A Java Selenium automation project using Maven and TestNG. It includes a self-he
 - ExtentReports
 - Ollama chat API integration
 
+## Project Structure
+
+```text
+selenium-autoheal/
+├── pom.xml
+├── testng.xml
+├── README.md
+├── PERSISTENCE_CACHE_IMPLEMENTATION.md
+└── src/
+    ├── main/java/com/eaapp/tests/
+    │   ├── config/      # test configuration reader
+    │   ├── core/        # WebDriver setup and base classes
+    │   ├── pages/       # page objects
+    │   └── utilities/   # LLM, reports, screenshots, locator healing
+    └── test/
+        ├── java/com/eaapp/tests/   # TestNG tests
+        └── resources/              # app, LLM, and logging config
+```
+
 ## Setup
 
 Install dependencies and compile:
