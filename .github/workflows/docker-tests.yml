@@ -16,4 +16,6 @@ jobs:
         run: docker build -t selenium-autoheal .
 
       - name: Run Selenium tests
-        run: docker run --rm selenium-autoheal
+        run: docker run --rm -e OLLAMA_API_KEY selenium-autoheal
+        env:
+          OLLAMA_API_KEY: ${{ secrets.OLLAMA_API_KEY }}
