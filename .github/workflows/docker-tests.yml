@@ -1,0 +1,19 @@
+name: Docker Selenium Tests
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get project code
+        uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -t selenium-autoheal .
+
+      - name: Run Selenium tests
+        run: docker run --rm selenium-autoheal
