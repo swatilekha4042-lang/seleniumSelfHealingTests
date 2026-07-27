@@ -7,7 +7,7 @@
     "pageLoadTimeoutSeconds": 60,
     "takeScreenshotOnFailure": true,
     "screenshotPath": "./screenshots",
-    "headless": false,
+    "headless": true,
     "maximizeWindow": true,
     "noSandbox": true,
     "disableGpu": false

@@ -43,7 +43,7 @@ public class WebDriverFactory {
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(config.getPageLoadTimeoutSeconds()));
 
         // Maximize window if configured
-        if (config.isMaximizeWindow()) {
+        if (config.isMaximizeWindow() && !config.isHeadless()) {
             driver.manage().window().maximize();
         }
 
@@ -51,32 +51,40 @@ public class WebDriverFactory {
         return driver;
     }
 
-    private WebDriver createChromeDriver() {
+   private WebDriver createChromeDriver() {
+    ChromeOptions options = new ChromeOptions();
+
+    String chromeBinary = System.getenv("CHROME_BIN");
+    String chromeDriverPath = System.getenv("CHROMEDRIVER_PATH");
+
+    if (chromeBinary != null && chromeDriverPath != null) {
+        options.setBinary(chromeBinary);
+        System.setProperty("webdriver.chrome.driver", chromeDriverPath);
+    } else {
         WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-
-        if (config.isHeadless()) {
-            options.addArguments("--headless");
-        }
-
-        options.addArguments(
-                "--no-sandbox",
-                "--disable-dev-shm-usage",
-                "--disable-gpu",
-                "--window-size=1920,1080",
-                "--disable-extensions",
-                "--disable-popup-blocking"
-        );
-
-        return new ChromeDriver(options);
     }
+
+    if (config.isHeadless()) {
+        options.addArguments("--headless=new");
+    }
+
+    options.addArguments(
+            "--no-sandbox",
+            "--disable-dev-shm-usage",
+            "--disable-gpu",
+            "--window-size=1920,1080",
+            "--disable-extensions",
+            "--disable-popup-blocking");
+
+    return new ChromeDriver(options);
+}
 
     private WebDriver createFirefoxDriver() {
         WebDriverManager.firefoxdriver().setup();
         FirefoxOptions options = new FirefoxOptions();
 
         if (config.isHeadless()) {
-            options.addArguments("--headless");
+            options.addArguments("--headless=new");
         }
 
         return new FirefoxDriver(options);

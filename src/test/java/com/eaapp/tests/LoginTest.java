@@ -67,7 +67,7 @@ public class LoginTest {
                test.info("Login validation failed");
             }              
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException("Login test failed", e);
         }
 
     }

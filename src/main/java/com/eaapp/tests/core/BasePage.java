@@ -45,14 +45,7 @@ public abstract class BasePage {
 
     protected WebElement waitForElementToBeClickable(WebElement el, int timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(timeoutInSeconds));
-        return wait.until(d -> {
-            try {
-                
-                return (el != null && el.isDisplayed() && el.isEnabled()) ? el : null;
-            } catch (Exception e) {
-                return null;
-            }
-        });
+        return wait.until(ExpectedConditions.elementToBeClickable(el));
     }
 
     protected boolean waitForElementToDisappear(By locator) {
@@ -86,10 +79,17 @@ public abstract class BasePage {
 
     // Action methods
     protected void click(WebElement ele) {
-       
-        ele.click();
-        logger.debug("Clicked on element: " + ele);
-    }
+    ((JavascriptExecutor) driver).executeScript(
+        "arguments[0].scrollIntoView({block: 'center', inline: 'center'});",
+        ele
+    );
+
+    new WebDriverWait(driver, Duration.ofSeconds(10))
+        .until(ExpectedConditions.elementToBeClickable(ele));
+
+    ele.click();
+    logger.debug("Clicked on element: " + ele);
+}
 
     protected void sendKeys(WebElement ele, String text) {
         
