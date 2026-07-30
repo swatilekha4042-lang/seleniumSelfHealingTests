@@ -33,7 +33,9 @@ selenium-autoheal/
 
 ## Setup
 
-Install dependencies and compile:
+Prerequisites: Java 11+, Maven, and a supported browser. Chrome is used by default; WebDriverManager downloads its driver when needed.
+
+Compile the project:
 
 ```bash
 mvn clean compile
@@ -65,6 +67,17 @@ Run a specific test class:
 mvn test -Dtest=LoginTest
 mvn test -Dtest=LLMIntegrationTest
 ```
+
+### Docker
+
+Build and run the test suite in the included Chrome-ready container:
+
+```bash
+docker build -t selenium-autoheal .
+docker run --rm -e OLLAMA_API_KEY="$OLLAMA_API_KEY" selenium-autoheal
+```
+
+The GitHub Actions workflow runs this Docker command for pushes to `main`. Configure `OLLAMA_API_KEY` as a repository secret for locator healing to work in CI.
 
 ## Key Files
 
