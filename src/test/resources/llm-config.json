@@ -1,6 +1,6 @@
 {
   "endpoint": "https://ollama.com/api/chat",
-  "model": "gpt-oss:120b",
+  "model": "gemma4:31b-cloud",
   "stream": false,
   "defaultPrompt": "You are a helpful assistant.",
   "temperature": 0.1,
