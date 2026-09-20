@@ -4,7 +4,7 @@ WORKDIR /app
 
 RUN apt-get update && apt-get install -y \
     maven \
-    openjdk-11-jdk-headless \
+    openjdk-17-jdk-headless \
     chromium \
     chromium-driver \
     && rm -rf /var/lib/apt/lists/*
