@@ -1,7 +1,6 @@
 package com.eaapp.tests;
 
 import com.eaapp.tests.utilities.LLMClient;
-import com.eaapp.tests.pages.EnhancedLoginPage;
 import org.apache.log4j.Logger;
 import org.testng.Assert;
 import org.testng.annotations.*;
